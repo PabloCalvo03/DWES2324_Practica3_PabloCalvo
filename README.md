@@ -8,23 +8,29 @@
 
    Reemplaza `tu_usuario` con tu nombre de usuario de MySQL. Se te pedirá ingresar la contraseña correspondiente.
 
-## 2. Modifica las Credenciales en `DatabaseEnvironmentData.java`
+## 2. Descarga un servidor Apache Tomcat (version 10 en adelante)
+
+1. Descarga el servidor desde Eclipse
+
+2. Agregar Servlet API al Build Path
+
+## 3. Modifica las Credenciales en `DatabaseEnvironmentData.java`
 
 1. Abre el archivo `DatabaseEnvironmentData.java` ubicado en `src/com/database`.
 
 2. Busca las siguientes líneas de código:
 
    ```java
-	String url = "jdbc:mysql://localhost:3306/productosdb";
-	String usuario = "tu_usuario";
-	String contraseña = "tu_contraseña";
+   String url = "jdbc:mysql://localhost:3306/pokemon";
+   String usuario = "tu_usuario";
+   String contraseña = "tu_contraseña";
    ```
 
 3. Cambia `"tu_usuario"` y `"tu_contraseña"` por tus propias credenciales de MySQL.
 
-## 3. Ejecutar la Aplicación
+## 4. Ejecutar la Aplicación
 
-Ahora que has configurado la base de datos y modificado las credenciales en `DatabaseEnvironmentData.java`, puedes ejecutar la aplicación.
+Ahora que has configurado la base de datos, descargado Apache Tomcat y modificado las credenciales en `DatabaseEnvironmentData.java`, puedes ejecutar la aplicación.
 
 ¡Listo! La aplicación debería estar configurada para funcionar con tu base de datos local.
 
