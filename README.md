@@ -21,7 +21,7 @@
 2. Busca las siguientes líneas de código:
 
    ```java
-   String url = "jdbc:mysql://localhost:3306/pokemon";
+   String url = "jdbc:mysql://localhost:3306/productosdb";
    String usuario = "tu_usuario";
    String contraseña = "tu_contraseña";
    ```
