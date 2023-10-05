@@ -17,7 +17,8 @@ public class MySqlConnection implements DatabaseConnection{
 	    }
 
 	    // Metodo para abrir la conexion con la base de datos MySql
-	    public Connection connect() {
+	    @Override
+		public Connection connect() {
 	        try {
 	            Class.forName("com.mysql.cj.jdbc.Driver");
 	            return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
@@ -28,7 +29,8 @@ public class MySqlConnection implements DatabaseConnection{
 	    }
 
 	    // Metodo para cerrar la conexion con la base de datos MySql
-	    public void close(Connection connection) {
+	    @Override
+		public void close(Connection connection) {
 	        if (connection != null) {
 	            try {
 	                connection.close();

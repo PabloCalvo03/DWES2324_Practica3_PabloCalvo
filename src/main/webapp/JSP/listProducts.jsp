@@ -16,6 +16,9 @@
 <body>
 
 	<%
+	if(request.getSession().getAttribute("usuario") == null){
+		response.sendRedirect("./login.jsp");
+	}
 	List<Product> products = (ArrayList<Product>) request.getAttribute("products");
 	%>
 	<div class="container mt-5">

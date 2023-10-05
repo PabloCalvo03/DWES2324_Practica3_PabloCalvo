@@ -23,3 +23,10 @@ INSERT INTO productos (nombre, descripcion, peso, stock) VALUES ('Logitech G Pro
 INSERT INTO productos (nombre, descripcion, peso, stock) VALUES ('SteelSeries Apex Pro', 'Teclado mecánico para juegos con interruptores SteelSeries OmniPoint ajustables, retroiluminación RGB, y reposamuñecas magnético.', 1.4, 35);
 INSERT INTO productos (nombre, descripcion, peso, stock) VALUES ('HyperX Alloy FPS Pro', 'Teclado mecánico compacto para juegos con interruptores Cherry MX, teclas rojas para FPS, y cable desmontable.', 1.1, 60);
 
+CREATE TABLE IF NOT EXISTS usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    userName VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+INSERT INTO usuarios (userName, password) VALUES ('admin', 'admin');

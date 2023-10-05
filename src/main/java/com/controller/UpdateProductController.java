@@ -19,7 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 public class UpdateProductController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -31,19 +31,22 @@ public class UpdateProductController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
+		if(request.getSession() == null) {
+			response.sendRedirect("/JSP/login.jsp");
+		}
+
 		Integer id = Integer.parseInt(request.getParameter("id"));
 		String nombre = request.getParameter("nombre");
 		String descripcion = request.getParameter("descripcion");
 		Float peso = Float.parseFloat(request.getParameter("peso"));
 		Integer stock = Integer.parseInt(request.getParameter("stock"));
-		
+
 		Product product = new Product(id, nombre, descripcion, peso, stock);
-		
+
 		request.setAttribute("product", product);
-		
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("JSP/updateProduct.jsp");
 
 		dispatcher.forward(request, response);
@@ -52,23 +55,27 @@ public class UpdateProductController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(request.getSession() == null) {
+			response.sendRedirect("/JSP/login.jsp");
+		}
 		// Hago uso de inyeccion de dependencias
 		DatabaseConnection connection = new MySqlConnection(DatabaseEnvironmentData.url, DatabaseEnvironmentData.usuario, DatabaseEnvironmentData.contraseña);
 		ProductDao productDao = new ProductDao(connection);
-		
+
 		Integer id = Integer.parseInt(request.getParameter("id"));
 		String nombre = request.getParameter("nombre");
 		String descripcion = request.getParameter("descripcion");
 		Float peso = Float.parseFloat(request.getParameter("peso"));
 		Integer stock = Integer.parseInt(request.getParameter("stock"));
-		
+
 		Product product = new Product(id, nombre, descripcion, peso, stock);
-		
+
 		productDao.updateProduct(product);
-		
+
 		response.sendRedirect("ListProductsController");
-		
+
 	}
 
 }

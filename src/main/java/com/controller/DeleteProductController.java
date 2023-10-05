@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 public class DeleteProductController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -28,20 +28,23 @@ public class DeleteProductController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(request.getSession() == null) {
+			response.sendRedirect("/JSP/login.jsp");
+		}
 		// Hago uso de inyeccion de dependencias
 		DatabaseConnection connection = new MySqlConnection(DatabaseEnvironmentData.url, DatabaseEnvironmentData.usuario, DatabaseEnvironmentData.contraseña);
 		ProductDao productDao = new ProductDao(connection);
-		
+
 		Integer productId = Integer.parseInt(request.getParameter("id"));
-		
+
 		productDao.deleteProduct(productId);
-		
+
 		response.sendRedirect("ListProductsController");
-		
-		
+
+
 	}
 
-	
-	
+
+
 
 }

@@ -9,6 +9,9 @@
 
 </head>
 <body>
+<% if(request.getSession().getAttribute("usuario") == null){
+	response.sendRedirect("JSP/login.jsp");
+}%>
    	<div class="container mt-5">
         <form action="ListProductsController" method="GET">
             <button type="submit" class="btn btn-primary">Acceder a la aplicación</button>

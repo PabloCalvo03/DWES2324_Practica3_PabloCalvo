@@ -10,7 +10,7 @@
     <servlet-name>GetOneProductController</servlet-name>
     <url-pattern>/GetOneProductController</url-pattern>
   </servlet-mapping>
-  <display-name>DWES2324_Practica2</display-name>
+  <display-name>DWES2324_Practica3</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
@@ -58,5 +58,15 @@
   <servlet-mapping>
     <servlet-name>UpdateProductController</servlet-name>
     <url-pattern>/UpdateProductController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LoginController</display-name>
+    <servlet-name>LoginController</servlet-name>
+    <servlet-class>com.controller.LoginController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginController</servlet-name>
+    <url-pattern>/LoginController</url-pattern>
   </servlet-mapping>
 </web-app>

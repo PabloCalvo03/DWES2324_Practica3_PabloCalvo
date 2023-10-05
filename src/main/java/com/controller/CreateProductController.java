@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 public class CreateProductController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -30,22 +30,27 @@ public class CreateProductController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		if(request.getSession() == null) {
+			response.sendRedirect("/JSP/login.jsp");
+		}
 		
 		// Hago uso de inyeccion de dependencias
 		DatabaseConnection connection = new MySqlConnection(DatabaseEnvironmentData.url, DatabaseEnvironmentData.usuario, DatabaseEnvironmentData.contraseña);
 		ProductDao productDao = new ProductDao(connection);
-		
+
 		String nombre = request.getParameter("nombre");
 		String descripcion = request.getParameter("descripcion");
 		Float peso = Float.parseFloat( request.getParameter("peso"));
 		Integer stock = Integer.parseInt(request.getParameter("stock"));
 
-		
+
 		Product product = new Product(nombre, descripcion, peso, stock);
-		
+
 		productDao.createProduct(product);
-		
+
 		response.sendRedirect("ListProductsController");
 	}
 

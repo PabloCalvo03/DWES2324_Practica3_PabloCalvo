@@ -50,7 +50,7 @@ public class ProductDao {
 
 	public List<Product> getAllProducts() {
 
-		List<Product> productos = new ArrayList<Product>();
+		List<Product> productos = new ArrayList<>();
 		Connection connection = null;
 
 		try {
@@ -101,7 +101,7 @@ public class ProductDao {
 			dbConnection.close(connection);
 		}
 	}
-	
+
 	public void createProduct(Product producto) {
 	    Connection connection = null;
 
@@ -127,7 +127,7 @@ public class ProductDao {
 	        dbConnection.close(connection);
 	    }
 	}
-	
+
 	public void updateProduct(Product producto) {
 	    Connection connection = null;
 
