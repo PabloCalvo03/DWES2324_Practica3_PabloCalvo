@@ -1,13 +1,14 @@
 package com.model;
 
-public class Usuario {
+public class User {
 	
 	private Integer id;
 	private String userName;
 	private String passWord;
 
-	public Usuario() {
+	public User() {
 	}
+	
 	
 	public Integer getId() {
 		return id;
@@ -33,7 +34,14 @@ public class Usuario {
 		this.passWord = passWord;
 	}
 
-	public Usuario(Integer id, String userName, String passWord) {
+	
+	public User(String userName, String passWord) {
+		this.userName = userName;
+		this.passWord = passWord;
+	}
+
+
+	public User(Integer id, String userName, String passWord) {
 		this.id = id;
 		this.userName = userName;
 		this.passWord = passWord;

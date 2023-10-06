@@ -6,8 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.database.DatabaseConnection;
-import com.model.Product;
-import com.model.Usuario;
+import com.model.User;
 
 public class UserDao {
 
@@ -17,25 +16,27 @@ public class UserDao {
 		this.dbConnection = dbConnection;
 	}
 
-	public Usuario getUserByNameAndPassword(String userName, String password) {
-		Usuario usuario = null;
+	public User getUserByNameAndPassword(String userName, String password) throws Exception {
+		User usuario = null;
 		Connection connection = null;
 
 		try {
 
 			connection = dbConnection.connect();
-			String consulta = "SELECT * FROM productos WHERE userName = ?, password = ?";
+			String consulta = "SELECT * FROM usuarios WHERE userName = ? AND password = ?";
 			PreparedStatement stmt = connection.prepareStatement(consulta);
 			stmt.setString(1, userName);
-			stmt.setString(1, password);
+			stmt.setString(2, password);
 
 			ResultSet resultSet = stmt.executeQuery();
 
 			if (resultSet.next()) {
-				usuario = new Usuario();
+				usuario = new User();
 				usuario.setId(resultSet.getInt("id"));
 				usuario.setUserName(resultSet.getString("userName"));
 				usuario.setPassWord(resultSet.getString("password"));
+			} else {
+				throw new Exception("Datos incorrectos");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -45,6 +46,31 @@ public class UserDao {
 
 		return usuario;
 		
+	}
+	
+	public void createUser(User usuario) {
+	    Connection connection = null;
+
+	    try {
+	        connection = dbConnection.connect();
+	        String consulta = "INSERT INTO usuarios (userName, password) VALUES (?, ?)";
+	        PreparedStatement stmt = connection.prepareStatement(consulta);
+	        stmt.setString(1, usuario.getUserName());
+	        stmt.setString(2, usuario.getPassWord());
+	        
+
+	        int filasAfectadas = stmt.executeUpdate();
+
+	        if (filasAfectadas == 1) {
+	            System.out.println("Usuario creado correctamente");
+	        } else {
+	            System.out.println("No se pudo crear el usuario");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        dbConnection.close(connection);
+	    }
 	}
 	
 

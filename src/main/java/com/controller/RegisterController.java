@@ -1,5 +1,12 @@
 package com.controller;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
 import com.dao.UserDao;
@@ -8,22 +15,16 @@ import com.database.DatabaseEnvironmentData;
 import com.database.MySqlConnection;
 import com.model.User;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-
 /**
- * Servlet implementation class LoginController
+ * Servlet implementation class RegisterController
  */
-public class LoginController extends HttpServlet {
+public class RegisterController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginController() {
+    public RegisterController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,21 +39,16 @@ public class LoginController extends HttpServlet {
 		HttpSession session = request.getSession();
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		
-		User usuario = null;
-		try {
-			usuario = userDao.getUserByNameAndPassword(username, password);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		
-		if(usuario != null && usuario.getUserName() != null && usuario.getPassWord() != null) {
-			session.setAttribute("usuario", usuario);
-			response.sendRedirect(request.getContextPath() + "/ListProductsController");
-		} else {
-			response.sendRedirect("JSP/login.jsp");
-		}
+		if(username != null && password != null) {
+			User usuario = new User(username, password);
+			try {
+				userDao.createUser(usuario);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		response.sendRedirect("JSP/login.jsp");
 
+		}
 	}
 
 }

@@ -17,7 +17,7 @@
 
 	<%
 	if(request.getSession().getAttribute("usuario") == null){
-		response.sendRedirect("./login.jsp");
+		response.sendRedirect("JSP/login.jsp");
 	}
 	List<Product> products = (ArrayList<Product>) request.getAttribute("products");
 	%>
@@ -26,6 +26,9 @@
 
 		<a href="JSP/createProduct.jsp" class="btn btn-success mb-3">Crear
 			Producto</a>
+		<form action="LogoutController" method="POST" style="margin-bottom: 1rem;">
+            <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
 
 		<table class="table">
 			<thead>
