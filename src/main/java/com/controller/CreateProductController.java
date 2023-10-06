@@ -2,9 +2,9 @@ package com.controller;
 
 import java.io.IOException;
 
-import com.dao.ProductDao;
+import com.controller.configurer.ConfigLoader;
+import com.repository.ProductRepository;
 import com.database.DatabaseConnection;
-import com.database.DatabaseEnvironmentData;
 import com.database.MySqlConnection;
 import com.model.Product;
 
@@ -18,6 +18,17 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 public class CreateProductController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	
+private ConfigLoader configLoader;
+	
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		this.configLoader = new ConfigLoader();
+	}
+
+
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -32,14 +43,10 @@ public class CreateProductController extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		if(request.getSession() == null) {
-			response.sendRedirect("/JSP/login.jsp");
-		}
 		
 		// Hago uso de inyeccion de dependencias
-		DatabaseConnection connection = new MySqlConnection(DatabaseEnvironmentData.url, DatabaseEnvironmentData.usuario, DatabaseEnvironmentData.contraseña);
-		ProductDao productDao = new ProductDao(connection);
+		DatabaseConnection connection = new MySqlConnection(configLoader.getJDBC(), configLoader.getUser(), configLoader.getPass());
+		ProductRepository productDao = new ProductRepository(connection);
 
 		String nombre = request.getParameter("nombre");
 		String descripcion = request.getParameter("descripcion");

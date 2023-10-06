@@ -89,4 +89,49 @@
     <servlet-name>RegisterController</servlet-name>
     <url-pattern>/RegisterController</url-pattern>
   </servlet-mapping>
+  <filter>
+    <display-name>AuthenticationFilter</display-name>
+    <filter-name>AuthenticationFilter</filter-name>
+    <filter-class>com.controller.filters.AuthenticationFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AuthenticationFilter</filter-name>
+    <url-pattern>/JSP/createProduct.jsp</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>AuthenticationFilter</filter-name>
+    <url-pattern>/JSP/listProducts.jsp</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>AuthenticationFilter</filter-name>
+    <url-pattern>/CreateProduct</url-pattern>
+  </filter-mapping>
+    <filter-mapping>
+    <filter-name>AuthenticationFilter</filter-name>
+    <url-pattern>/JSP/deleteProduct.jsp</url-pattern>
+  </filter-mapping>
+    <filter-mapping>
+    <filter-name>AuthenticationFilter</filter-name>
+    <url-pattern>/JSP/updateProduct.jsp</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>AuthenticationFilter</filter-name>
+    <servlet-name>ListProductsController</servlet-name>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>AuthenticationFilter</filter-name>
+    <servlet-name>DeleteProductController</servlet-name>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>AuthenticationFilter</filter-name>
+    <servlet-name>GetOneProductController</servlet-name>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>AuthenticationFilter</filter-name>
+    <servlet-name>UpdateProductController</servlet-name>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>AuthenticationFilter</filter-name>
+    <servlet-name>CreateProductController</servlet-name>
+  </filter-mapping>
 </web-app>

@@ -8,9 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-<% if(request.getSession().getAttribute("usuario") == null){
-	response.sendRedirect("./login.jsp");
-}%>
+
     <div class="container mt-5">
         <h1>Crear producto</h1>
         <form action="../CreateProductController" method="POST">

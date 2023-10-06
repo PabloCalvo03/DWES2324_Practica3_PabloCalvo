@@ -1,4 +1,4 @@
-package com.dao;
+package com.repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,15 +8,15 @@ import java.sql.SQLException;
 import com.database.DatabaseConnection;
 import com.model.User;
 
-public class UserDao {
+public class UserRepository {
 
 	private DatabaseConnection dbConnection;
 
-	public UserDao(DatabaseConnection dbConnection) {
+	public UserRepository(DatabaseConnection dbConnection) {
 		this.dbConnection = dbConnection;
 	}
 
-	public User getUserByNameAndPassword(String userName, String password) throws Exception {
+	public User getUserByCredentials(String userName, String password) throws Exception {
 		User usuario = null;
 		Connection connection = null;
 

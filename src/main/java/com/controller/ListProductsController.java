@@ -3,11 +3,11 @@ package com.controller;
 import java.io.IOException;
 import java.util.List;
 
-import com.dao.ProductDao;
+import com.controller.configurer.ConfigLoader;
 import com.database.DatabaseConnection;
-import com.database.DatabaseEnvironmentData;
 import com.database.MySqlConnection;
 import com.model.Product;
+import com.repository.ProductRepository;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -21,6 +21,13 @@ import jakarta.servlet.http.HttpServletResponse;
 public class ListProductsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+private ConfigLoader configLoader;
+	
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		this.configLoader = new ConfigLoader();
+	}
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -34,14 +41,11 @@ public class ListProductsController extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getSession() == null) {
-			response.sendRedirect("/JSP/login.jsp");
-		}
 		// Hago uso de inyeccion de dependencias
-		DatabaseConnection connection = new MySqlConnection(DatabaseEnvironmentData.url, DatabaseEnvironmentData.usuario, DatabaseEnvironmentData.contraseña);
-		ProductDao productDao = new ProductDao(connection);
+		DatabaseConnection connection = new MySqlConnection(this.configLoader.getJDBC(), configLoader.getUser(), configLoader.getPass());
+		ProductRepository productRepository = new ProductRepository(connection);
 
-		List<Product> products = productDao.getAllProducts();
+		List<Product> products = productRepository.getAllProducts();
 
 		request.setAttribute("products", products);
 

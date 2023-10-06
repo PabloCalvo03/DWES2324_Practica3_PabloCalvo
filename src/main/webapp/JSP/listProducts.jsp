@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page import="com.model.Product"%>
+<%@ page import="com.model.User"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 
@@ -16,13 +17,11 @@
 <body>
 
 	<%
-	if(request.getSession().getAttribute("usuario") == null){
-		response.sendRedirect("JSP/login.jsp");
-	}
 	List<Product> products = (ArrayList<Product>) request.getAttribute("products");
+	User usuario = (User) request.getSession().getAttribute("usuario");
 	%>
 	<div class="container mt-5">
-		<h1>Lista de Productos</h1>
+		<h1>Lista de Productos - Bienvenido <%= usuario.getUserName() %>!</h1>
 
 		<a href="JSP/createProduct.jsp" class="btn btn-success mb-3">Crear
 			Producto</a>

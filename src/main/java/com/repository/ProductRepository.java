@@ -1,4 +1,4 @@
-package com.dao;
+package com.repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,11 +10,11 @@ import java.util.List;
 import com.database.DatabaseConnection;
 import com.model.Product;
 
-public class ProductDao {
+public class ProductRepository {
 
 	private DatabaseConnection dbConnection;
 
-	public ProductDao(DatabaseConnection dbConnection) {
+	public ProductRepository(DatabaseConnection dbConnection) {
 		this.dbConnection = dbConnection;
 	}
 

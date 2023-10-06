@@ -10,9 +10,6 @@
 </head>
 <body>
 <% 
- if(request.getSession().getAttribute("usuario") == null){
-	response.sendRedirect("./login.jsp");
-}
 Product product = (Product) request.getAttribute("product"); %>
     <div class="container mt-5">
         <h1>Actualizar producto</h1>
