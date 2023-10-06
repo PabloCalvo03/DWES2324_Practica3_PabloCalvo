@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 import com.database.DatabaseConnection;
 import com.model.User;
@@ -48,7 +49,38 @@ public class UserRepository {
 		
 	}
 	
-	public void createUser(User usuario) {
+	public User getUserByUsername(String userName) throws Exception {
+		User usuario = null;
+		Connection connection = null;
+
+		try {
+
+			connection = dbConnection.connect();
+			String consulta = "SELECT * FROM usuarios WHERE userName = ?";
+			PreparedStatement stmt = connection.prepareStatement(consulta);
+			stmt.setString(1, userName);
+
+			ResultSet resultSet = stmt.executeQuery();
+
+			if (resultSet.next()) {
+				usuario = new User();
+				usuario.setId(resultSet.getInt("id"));
+				usuario.setUserName(resultSet.getString("userName"));
+				usuario.setPassWord(resultSet.getString("password"));
+			} else {
+				throw new Exception("Datos incorrectos");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			dbConnection.close(connection);
+		}
+
+		return usuario;
+		
+	}
+	
+	public void createUser(User usuario){
 	    Connection connection = null;
 
 	    try {

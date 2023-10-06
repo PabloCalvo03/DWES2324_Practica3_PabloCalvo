@@ -2,11 +2,12 @@ package com.controller;
 
 import java.io.IOException;
 
-import com.controller.configurer.ConfigLoader;
-import com.repository.UserRepository;
+import com.configurer.ConfigLoader;
 import com.database.DatabaseConnection;
 import com.database.MySqlConnection;
+import com.encryptor.BCrypt;
 import com.model.User;
+import com.repository.UserRepository;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -24,7 +25,7 @@ private ConfigLoader configLoader;
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		this.configLoader = new ConfigLoader();
+		this.configLoader = ConfigLoader.getInstance();
 	}
        
     /**
@@ -48,12 +49,12 @@ private ConfigLoader configLoader;
 		
 		User usuario = null;
 		try {
-			usuario = userRepository.getUserByCredentials(username, password);
+			usuario = userRepository.getUserByUsername(username);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		
-		if(usuario != null && usuario.getUserName() != null && usuario.getPassWord() != null) {
+		if(usuario != null && BCrypt.checkpw(password, usuario.getPassWord()) && usuario.getUserName() != null && usuario.getPassWord() != null) {
 			session.setAttribute("usuario", usuario);
 			response.sendRedirect(request.getContextPath() + "/ListProductsController");
 		} else {

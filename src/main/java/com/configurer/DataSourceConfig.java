@@ -1,4 +1,4 @@
-package com.controller.configurer;
+package com.configurer;
 
 import javax.sql.DataSource;
 

@@ -1,17 +1,7 @@
-package com.controller.configurer;
+package com.configurer;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.util.Base64;
-import java.util.Date;
 import java.util.Properties;
 
 public class ConfigLoader {
@@ -52,7 +42,12 @@ public class ConfigLoader {
          return user;
     }
     public String getPass() {
-   	 String pass =  getProperty("bbdd.pass");
+    	String pass;
+    	try {
+    	   	 pass =  getProperty("bbdd.pass");
+    	} catch(IllegalStateException e) {
+    		pass = "";
+    	}
         return pass;
    }
     public String getClientId() {
@@ -72,7 +67,7 @@ public class ConfigLoader {
         return uri;
     }
 
-    private String getProperty(String key) {
+    private String getProperty(String key) throws IllegalStateException {
         String value = properties.getProperty(key);
         if (value == null || value.trim().isEmpty()) {
             throw new IllegalStateException(key + " is missing or empty in config.properties");

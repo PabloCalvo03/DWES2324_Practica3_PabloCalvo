@@ -3,7 +3,7 @@ package com.controller;
 import java.io.IOException;
 import java.util.List;
 
-import com.controller.configurer.ConfigLoader;
+import com.configurer.ConfigLoader;
 import com.database.DatabaseConnection;
 import com.database.MySqlConnection;
 import com.model.Product;
@@ -26,7 +26,7 @@ private ConfigLoader configLoader;
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		this.configLoader = new ConfigLoader();
+		this.configLoader = ConfigLoader.getInstance();
 	}
     /**
      * @see HttpServlet#HttpServlet()

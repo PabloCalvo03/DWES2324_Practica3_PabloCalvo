@@ -17,8 +17,8 @@
 			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/usuario-m/eclipse-workspace/apache-tomcat-10.0.27/lib/annotations-api.jar"/>
-	<classpathentry kind="lib" path="/home/usuario-m/eclipse-workspace/apache-tomcat-10.0.27/lib/jsp-api.jar"/>
-	<classpathentry kind="lib" path="/home/usuario-m/eclipse-workspace/apache-tomcat-10.0.27/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="/Users/pablo/Desktop/Practica 3 login/apache-tomcat-10.0.27/lib/jsp-api.jar"/>
+	<classpathentry kind="lib" path="/Users/pablo/Desktop/Practica 3 login/apache-tomcat-10.0.27/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="/Users/pablo/Desktop/Practica 3 login/apache-tomcat-10.0.27/lib/annotations-api.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

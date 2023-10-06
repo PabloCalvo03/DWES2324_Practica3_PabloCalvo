@@ -2,9 +2,10 @@ package com.controller;
 
 import java.io.IOException;
 
-import com.controller.configurer.ConfigLoader;
+import com.configurer.ConfigLoader;
 import com.database.DatabaseConnection;
 import com.database.MySqlConnection;
+import com.encryptor.BCrypt;
 import com.model.User;
 import com.repository.UserRepository;
 
@@ -25,7 +26,7 @@ private ConfigLoader configLoader;
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		this.configLoader = new ConfigLoader();
+		this.configLoader = ConfigLoader.getInstance();
 	}
     /**
      * @see HttpServlet#HttpServlet()
@@ -45,14 +46,24 @@ private ConfigLoader configLoader;
 		HttpSession session = request.getSession();
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		if(username != null && password != null) {
-			User usuario = new User(username, password);
+		User usuarioForRegister = null;
+		try {
+			usuarioForRegister = userRepository.getUserByUsername(username);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		if(usuarioForRegister == null && username.isEmpty() && password.isEmpty()) {
+			User usuario = new User(username, BCrypt.hashpw(password, BCrypt.gensalt()));
 			try {
 				userRepository.createUser(usuario);
+				response.sendRedirect("JSP/login.jsp");
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-		response.sendRedirect("JSP/login.jsp");
+		} else {
+			
+			response.sendRedirect("JSP/registro.jsp");
 
 		}
 	}

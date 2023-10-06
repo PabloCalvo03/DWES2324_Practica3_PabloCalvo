@@ -18,10 +18,9 @@
 
 	<%
 	List<Product> products = (ArrayList<Product>) request.getAttribute("products");
-	User usuario = (User) request.getSession().getAttribute("usuario");
 	%>
 	<div class="container mt-5">
-		<h1>Lista de Productos - Bienvenido <%= usuario.getUserName() %>!</h1>
+		<h1>Lista de Productos - Bienvenido ${sessionScope.usuario.getUserName()}!</h1>
 
 		<a href="JSP/createProduct.jsp" class="btn btn-success mb-3">Crear
 			Producto</a>

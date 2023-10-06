@@ -2,11 +2,11 @@ package com.controller;
 
 import java.io.IOException;
 
-import com.controller.configurer.ConfigLoader;
-import com.repository.ProductRepository;
+import com.configurer.ConfigLoader;
 import com.database.DatabaseConnection;
 import com.database.MySqlConnection;
 import com.model.Product;
+import com.repository.ProductRepository;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -25,7 +25,7 @@ private ConfigLoader configLoader;
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		this.configLoader = new ConfigLoader();
+		this.configLoader = ConfigLoader.getInstance();
 	}
 
 
