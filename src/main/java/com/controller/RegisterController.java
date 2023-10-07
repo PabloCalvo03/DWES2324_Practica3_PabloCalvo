@@ -53,7 +53,7 @@ private ConfigLoader configLoader;
 			System.out.println(e.getMessage());
 		}
 		
-		if(usuarioForRegister == null && username.isEmpty() && password.isEmpty()) {
+		if(usuarioForRegister == null && !username.isEmpty() && !password.isEmpty()) {
 			User usuario = new User(username, BCrypt.hashpw(password, BCrypt.gensalt()));
 			try {
 				userRepository.createUser(usuario);
