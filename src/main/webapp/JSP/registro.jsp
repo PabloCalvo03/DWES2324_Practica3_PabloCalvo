@@ -48,6 +48,12 @@
                             <label for="password">Contraseña</label>
                             <input type="password" class="form-control" id="password" name="password">
                         </div>
+                        <div class="form-group">
+	                        <label for="tipo_usuario">Rol del usuario:</label>
+							<input type="text" id="tipo_usuario" name="tipo_usuario" value="Usuario normal" disabled class="form-control">
+							<span class="form-text text-muted">Si desea ser administrador, debe hablar con algun administrador de la aplicacion.</span>
+							
+                        </div>
                         <button type="submit" class="btn btn-primary">Registrarse</button>
                     </form>
                     <p class="mt-3">¿Ya tienes una cuenta? <a href="login.jsp">Inicia sesión</a></p>

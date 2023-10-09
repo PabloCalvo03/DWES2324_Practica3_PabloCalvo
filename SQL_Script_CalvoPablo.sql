@@ -26,7 +26,9 @@ INSERT INTO productos (nombre, descripcion, peso, stock) VALUES ('HyperX Alloy F
 CREATE TABLE IF NOT EXISTS usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     userName VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(255) NOT NULL
 );
 
-INSERT INTO usuarios (userName, password) VALUES ('admin', '$2a$10$FXKTROOnaUwQVAVWbarbDeFL.1u5Ve5yOIoBLaD/dOhIXd54slXRW');
+INSERT INTO usuarios (userName, password, role) VALUES ('admin', '$2a$10$FXKTROOnaUwQVAVWbarbDeFL.1u5Ve5yOIoBLaD/dOhIXd54slXRW', 'ADMIN');
+INSERT INTO usuarios (userName, password, role) VALUES ('admin1', '$2a$10$FXKTROOnaUwQVAVWbarbDeFL.1u5Ve5yOIoBLaD/dOhIXd54slXRW', 'ADMIN');

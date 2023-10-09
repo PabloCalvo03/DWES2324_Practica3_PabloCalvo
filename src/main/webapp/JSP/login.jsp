@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,6 +35,9 @@
     </style>
 </head>
 <body>
+<c:if test="${sessionScope.usuario != null}">
+	<c:redirect url="../ListProductsController" />
+</c:if>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -50,6 +55,16 @@
                         <button type="submit" class="btn btn-primary">Iniciar sesión</button>
                     </form>
                     <p class="mt-3">¿No tienes una cuenta aún? <a href="registro.jsp">Regístrate</a></p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <h2 class="card-title mb-4">Entrar sin registro</h2>
+                    <p class="mt-3">Si deseas entrar sin tener un usuario creado, puedes hacerlo haciendo clic en el siguiente botón:</p>
+                    <a href="../ListProductsController" class="btn btn-success">Entrar sin Usuario</a>
                 </div>
             </div>
         </div>

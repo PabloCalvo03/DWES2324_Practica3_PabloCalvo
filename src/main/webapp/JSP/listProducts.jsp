@@ -20,13 +20,23 @@
 	List<Product> products = (ArrayList<Product>) request.getAttribute("products");
 	%>
 	<div class="container mt-5">
-		<h1>Lista de Productos - Bienvenido ${sessionScope.usuario.getUserName()}!</h1>
-
-		<a href="JSP/createProduct.jsp" class="btn btn-success mb-3">Crear
-			Producto</a>
-		<form action="LogoutController" method="POST" style="margin-bottom: 1rem;">
-            <button type="submit" class="btn btn-danger">Logout</button>
-        </form>
+		<h1>Lista de Productos <c:if test="${sessionScope.usuario != null}">- Bienvenido ${sessionScope.usuario.getUserName()}! Rol: ${sessionScope.usuario.getRole()}</c:if></h1>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <c:if test="${sessionScope.usuario.getRole() eq 'ADMIN'}">
+            <a href="JSP/createProduct.jsp" class="btn btn-success">Crear Producto</a>
+        </c:if>
+        <c:if test="${sessionScope.usuario.getRole() eq 'ADMIN'}">
+            <a href="ListUsersController" class="btn btn-secondary">Gestionar usuarios</a>
+        </c:if>
+		<c:if test="${sessionScope.usuario != null}">
+	        <form action="LogoutController" method="POST">
+	            <button type="submit" class="btn btn-danger">Logout</button>
+	        </form>
+        </c:if>
+        <c:if test="${sessionScope.usuario == null}">
+	        <a href="JSP/login.jsp"><button type="submit" class="btn btn-success">Login</button></a>
+	    </c:if>
+    </div>
 
 		<table class="table">
 			<thead>
@@ -36,7 +46,9 @@
 					<th>Descripcion</th>
 					<th>Peso</th>
 					<th>Stock</th>
+					<c:if test="${sessionScope.usuario != null}">
 					<th>Acciones</th>
+					</c:if>
 				</tr>
 			</thead>
 			<tbody>
@@ -47,23 +59,34 @@
 						<td>${producto.getDescripcion()}</td>
 						<td>${producto.getPeso()}</td>
 						<td>${producto.getStock()}</td>
+						<c:if test="${sessionScope.usuario.getRole() eq 'ADMIN'}">
+							<td>
+								<form action="UpdateProductController" method="GET"
+									style="display: inline;">
+									<input type="hidden" style="display: none;" name="id" value="${producto.getId()}">
+									<input type="hidden" style="display: none;" name="nombre" value="${producto.getNombre()}">
+									<input type="hidden" style="display: none;" name="descripcion" value="${producto.getDescripcion()}">
+									<input type="hidden" style="display: none;" name="peso" value="${producto.getPeso()}">
+									<input type="hidden" style="display: none;" name="stock" value="${producto.getStock()}">
+									
+									<button type="submit" class="btn btn-primary">Editar</button>
+								</form>
+								<form action="DeleteProductController" method="post"
+									style="display: inline;">
+									<input type="hidden" name="id" style="display: none;" value="${producto.getId()}">
+									<button type="submit" class="btn btn-danger">Borrar</button>
+								</form>
+							</td>
+						</c:if>
+						<c:if test="${sessionScope.usuario.getRole() eq 'STANDARD'}">
 						<td>
-							<form action="UpdateProductController" method="GET"
-								style="display: inline;">
-								<input type="hidden" style="display: none;" name="id" value="${producto.getId()}">
-								<input type="hidden" style="display: none;" name="nombre" value="${producto.getNombre()}">
-								<input type="hidden" style="display: none;" name="descripcion" value="${producto.getDescripcion()}">
-								<input type="hidden" style="display: none;" name="peso" value="${producto.getPeso()}">
-								<input type="hidden" style="display: none;" name="stock" value="${producto.getStock()}">
-								
-								<button type="submit" class="btn btn-primary">Editar</button>
-							</form>
-							<form action="DeleteProductController" method="post"
-								style="display: inline;">
-								<input type="hidden" name="id" style="display: none;" value="${producto.getId()}">
-								<button type="submit" class="btn btn-danger">Borrar</button>
-							</form>
+							<form action="AñadirAlCarritoController" method="post"
+									style="display: inline;">
+									<input type="hidden" name="id" style="display: none;" value="${producto.getId()}">
+									<button type="submit" class="btn btn-success">Añadir al carrito</button>
+								</form>
 						</td>
+						</c:if>
 					</tr>
 				</c:forEach>
 			</tbody>

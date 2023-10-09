@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.database.DatabaseConnection;
+import com.model.Product;
 import com.model.User;
 
 public class UserRepository {
@@ -67,6 +69,7 @@ public class UserRepository {
 				usuario.setId(resultSet.getInt("id"));
 				usuario.setUserName(resultSet.getString("userName"));
 				usuario.setPassWord(resultSet.getString("password"));
+				usuario.setRole(resultSet.getString("role"));
 			} else {
 				throw new Exception("Datos incorrectos");
 			}
@@ -80,15 +83,45 @@ public class UserRepository {
 		
 	}
 	
+	public List<User> getAllUsers() {
+
+		List<User> users = new ArrayList<>();
+		Connection connection = null;
+
+		try {
+			connection = dbConnection.connect();
+			String consulta = "SELECT * FROM usuarios";
+			PreparedStatement stmt = connection.prepareStatement(consulta);
+
+			ResultSet resultSet = stmt.executeQuery();
+
+			while (resultSet.next()) {
+				User usuario = new User();
+				usuario.setId(resultSet.getInt("id"));
+				usuario.setUserName(resultSet.getString("userName"));
+				usuario.setRole(resultSet.getString("role"));
+
+				users.add(usuario);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			dbConnection.close(connection);
+		}
+
+		return users;
+	}
+	
 	public void createUser(User usuario){
 	    Connection connection = null;
 
 	    try {
 	        connection = dbConnection.connect();
-	        String consulta = "INSERT INTO usuarios (userName, password) VALUES (?, ?)";
+	        String consulta = "INSERT INTO usuarios (userName, password, role) VALUES (?, ?, ?)";
 	        PreparedStatement stmt = connection.prepareStatement(consulta);
 	        stmt.setString(1, usuario.getUserName());
 	        stmt.setString(2, usuario.getPassWord());
+	        stmt.setString(3, usuario.getRole());
 	        
 
 	        int filasAfectadas = stmt.executeUpdate();
@@ -97,6 +130,56 @@ public class UserRepository {
 	            System.out.println("Usuario creado correctamente");
 	        } else {
 	            System.out.println("No se pudo crear el usuario");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        dbConnection.close(connection);
+	    }
+	}
+	
+	public void quitAdminPrivileges(Integer id) {
+	    Connection connection = null;
+
+	    try {
+	        connection = dbConnection.connect();
+	        String consulta = "UPDATE usuarios SET role = ? WHERE id = ?"
+;
+	        PreparedStatement stmt = connection.prepareStatement(consulta);
+	        stmt.setString(1, "STANDARD");
+	        stmt.setInt(2, id);
+
+	        int filasAfectadas = stmt.executeUpdate();
+
+	        if (filasAfectadas == 1) {
+	            System.out.println("Rol cambiado correctamente");
+	        } else {
+	            System.out.println("Fallo al cambiar el rol");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        dbConnection.close(connection);
+	    }
+	}
+	
+	public void putAdminPrivileges(Integer id) {
+	    Connection connection = null;
+
+	    try {
+	        connection = dbConnection.connect();
+	        String consulta = "UPDATE usuarios SET role = ? WHERE id = ?"
+;
+	        PreparedStatement stmt = connection.prepareStatement(consulta);
+	        stmt.setString(1, "ADMIN");
+	        stmt.setInt(2, id);
+
+	        int filasAfectadas = stmt.executeUpdate();
+
+	        if (filasAfectadas == 1) {
+	            System.out.println("Rol cambiado correctamente");
+	        } else {
+	            System.out.println("allo al cambiar el rol");
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
